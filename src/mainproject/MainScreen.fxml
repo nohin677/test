@@ -23,7 +23,7 @@
             <Image url="img/The-Great-Adventure.png" />
          </image>
       </ImageView>
-      <Button layoutX="313.0" layoutY="491.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="363.0" textAlignment="CENTER">
+      <Button fx:id="closeButton" layoutX="313.0" layoutY="491.0" mnemonicParsing="false" onAction="#startButton" prefHeight="52.0" prefWidth="363.0" textAlignment="CENTER">
           <graphic>
               <ImageView>
                   <image>
