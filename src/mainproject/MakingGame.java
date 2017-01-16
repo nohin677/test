@@ -8,6 +8,7 @@ package mainproject;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,20 +18,25 @@ import javafx.stage.Stage;
  *
  * @author test
  */
-public class MakingGame {
-    private boolean closeScreen = false;
-    public void makeNewScreen(Event event){
-        try {
-            Stage primaryStage = (Stage)((Node)event.)
-            Parent root = FXMLLoader.load(getClass().getResource("gameScreen"));
+public class MakingGame  {
+    private Stage stage;
+    
+    /*public MakingGame(Stage stage){
+        this.stage = stage;
+    }*/
+
+    
+    public void makeNewScreen() throws Exception{
+           
+    }
+
+   
+    public void start(Stage primaryStage) throws Exception {
+        
+         Parent root = FXMLLoader.load(getClass().getResource("gameScreen.fxml"));
             Scene scene = new Scene(root);
-            primaryStage.setResizable(false);
-            primaryStage.setTitle("Hello World!");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MakingGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }
