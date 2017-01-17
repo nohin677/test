@@ -11,7 +11,7 @@
    <children>
       <TextArea fx:id="textBox" layoutX="131.0" layoutY="23.0" prefHeight="105.0" prefWidth="739.0" />
       <Label layoutX="378.0" layoutY="176.0" prefHeight="22.0" prefWidth="301.0" text="Enter Character Name:" />
-      <TextField layoutX="378.0" layoutY="220.0" prefHeight="22.0" prefWidth="210.0" />
+      <TextField fx:id="characterNameTextField" layoutX="378.0" layoutY="220.0" onAction="#EnteredCharacterName" prefHeight="22.0" prefWidth="210.0" />
       <Label layoutX="103.0" layoutY="271.0" prefHeight="31.0" prefWidth="150.0" text="Choose Race:" />
       <CheckBox layoutX="101.0" layoutY="302.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="73.0" text="Human" />
       <CheckBox layoutX="101.0" layoutY="333.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="73.0" text="Pounder" />
@@ -23,5 +23,11 @@
       <CheckBox layoutX="395.0" layoutY="311.0" mnemonicParsing="false" text="Male" />
       <CheckBox layoutX="395.0" layoutY="342.0" mnemonicParsing="false" text="Female" />
       <Button layoutX="707.0" layoutY="596.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Button" />
+      <Label fx:id="characterLabel" layoutX="624.0" layoutY="211.0" prefHeight="44.0" prefWidth="264.0" />
+      <Label layoutX="395.0" layoutY="424.0" prefHeight="17.0" prefWidth="136.0" text="Choose Desired Class: " />
+      <CheckBox layoutX="395.0" layoutY="453.0" mnemonicParsing="false" onMouseDragEntered="#warriorDescription" prefHeight="17.0" prefWidth="94.0" text="Warrior" />
+      <CheckBox layoutX="395.0" layoutY="486.0" mnemonicParsing="false" text="Archer" />
+      <CheckBox layoutX="395.0" layoutY="514.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="73.0" text="Knight" />
+      <Label fx:id="description" layoutX="596.0" layoutY="478.0" prefHeight="90.0" prefWidth="272.0" />
    </children>
 </AnchorPane>
