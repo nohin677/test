@@ -30,6 +30,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import File.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import javafx.scene.control.CheckBox;
 
 /**
  * FXML Controller class
@@ -44,93 +48,155 @@ public class GameScreenController implements Initializable {
     public TextArea textBox;
     @FXML
     public TextField characterNameTextField;
-    
-    public BufferedReader buffRead;
-    private FileReader in;
-    private File textFile;
-    private String nextLine;
-    private  Timeline timeline;
-    private FileInputStream fis;
-    private StringBuilder out;
-    private String characterName;
- 
+    @FXML
+    public CheckBox humanBox, pounderBox, maleBox, femaleBox, slimBox, fatBox, muscularBox, warriorBox, archerBox, knightBox;
+
+    private ArrayList<String> allDescriptions = new ArrayList();
+    private String characterName, characterRace, characterGender, characterClass, characterBodyType;
+    private MakeTextFile newFile;
+    private boolean[] conditions = {false, false, false, false};
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        MakeFile newFile = new MakeFile("C:/Users/USER/Documents/limo.txt");
-        textFile = new File("C:/Users/USER/Documents/limo.txt");
-     
-        
-        try {
-            fis = new FileInputStream(textFile);
-            buffRead = new BufferedReader(new InputStreamReader(fis));
-            out = new StringBuilder();
-        } catch (FileNotFoundException e) {
+        Collections.addAll(allDescriptions,
+                "Warrior is a class for greedy indivials: "
+                + "\n It relies on strength and long melee weapons. "
+                + "\n A Character using this class will gain bonuses on streagth and long melee weapon damage. "
+                + "\n The prefered weapon of choice for this class is the long war axe",
+                "Acher is a class for patient indivials. "
+                + "\n It relies on distance and percition. "
+                + "\n A Character using this class will gain bonuses in percision and long ranged weapon damage. "
+                + "\n The perfered weapon of choice for this class is the Bow and throwing knifes.",
+                "Knight is a class for paitent and greedy indivials."
+                + " \n It relies on defence and armor. "
+                + "\n A Character using this class will gain bonuses on defence and armor equipment."
+                + "\n The prefered weapon of choice is the knight armor and the sort sword.",
+                "Human is a very basic class",
+                "Pounder is a class for angry indvials");
 
+        newFile = new MakeTextFile("C:/Users/USER/Documents/limo.txt");
+        try {
+            newFile.createNewFile();
+            newFile.createInputStream();
+        } catch (FileNotFoundException ex) {
         }
-        
-        
+
         textBox.setEditable(false);
-        
-       
-       
         textBox.setText("Welcome Player!" + "\n");
-      
-         setTimer();
-        //setTimer();
+        setTimer();
+
     }
 
-    public void setTimer()  {
-         
-          Timeline timeline = new Timeline(new KeyFrame(
-        Duration.millis(2000),
-        ae ->displayGuide()));
-       timeline.setCycleCount(6);
+    public void setTimer() {
+
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(2000),
+                ae -> displayGuide()));
+        timeline.setCycleCount(6);
         timeline.play();
-         
 
-     
     }
-    
-    public void displayGuide(){
+
+    public void displayGuide() {
         try {
-            if((nextLine = buffRead.readLine()) != null){
-            textBox.appendText(nextLine+"\n");
-            
-            } else{
-          
-            }
-            
+            textBox.appendText(newFile.OutPutReadLine() + "\n");
+
         } catch (IOException ex) {
-           System.err.print("Error Found");        }
+            System.err.print("Error Found");
+        }
     }
-    
-    public void EnteredCharacterName(ActionEvent event){
-        if(characterNameTextField.getText() != null){
-             characterLabel.setText("Your Character Name Can't Be Nothing");
-        }else{
-        characterName = characterNameTextField.getText();
-        characterLabel.setText("Your Character Name is: "+characterName);
-        }  
+
+    public void EnteredCharacterName(ActionEvent event) {
+
+        if (characterNameTextField.getText() != null) {
+            characterLabel.setText("Your Character Name Can't Be Nothing");
+        } else {
+            characterName = characterNameTextField.getText();
+            characterLabel.setText("Your Character Name is: " + characterName);
+        }
     }
-    
-    public void warriorDescription(Event eve){
-        description.setText("NOOOO");
+
+    public void warriorDescription(Event eve) {
+        description.setText(allDescriptions.get(0));
     }
-    
-    public void exit(Event l){
+
+    public void archerDescription(Event event1) {
+        description.setText(allDescriptions.get(1));
+    }
+
+    public void knightDescription(Event event) {
+        description.setText(allDescriptions.get(2));
+    }
+
+    public void humanDescription(Event event) {
+        description.setText(allDescriptions.get(3));
+    }
+
+    public void pounderDescription(Event event) {
+        description.setText(allDescriptions.get(4));
+    }
+
+    public void checkEventChoseRace(Event event) {
+        conditions[0] = true;
+        if (humanBox.isSelected()) {
+            characterRace = "Human";
+            pounderBox.setSelected(false);
+        } else if (pounderBox.isSelected()) {
+            characterRace = "Pounder";
+            humanBox.setSelected(false);
+        }
+    }
+
+    public void checkEventChooseGender(Event event) {
+        conditions[1] = true;
+        if (maleBox.isSelected()) {
+            characterGender = "Human";
+            femaleBox.setSelected(false);
+        } else if (femaleBox.isSelected()) {
+            characterGender = "Pounder";
+            maleBox.setSelected(false);
+        }
+    }
+
+    public void checkEventChooseBodyType(Event event) {
+        conditions[2] = true;
+        if (fatBox.isSelected()) {
+            characterBodyType = "Fat";
+            muscularBox.setSelected(false);
+            slimBox.setSelected(false);
+        } else if (muscularBox.isSelected()) {
+            characterGender = "Muscular";
+            fatBox.setSelected(false);
+            slimBox.setSelected(false);
+        } else if (slimBox.isSelected()) {
+            characterGender = "Slim";
+            fatBox.setSelected(false);
+            muscularBox.setSelected(false);
+        }
+    }
+
+    public void checkEventChooseClass(Event event) {
+        conditions[3] = true;
+         if (warriorBox.isSelected()) {
+            characterClass = "Warrior";
+            archerBox.setSelected(false);
+            knightBox.setSelected(false);
+        } else if (archerBox.isSelected()) {
+            characterClass = "Archer";
+            knightBox.setSelected(false);
+            warriorBox.setSelected(false);
+        } else if (knightBox.isSelected()) {
+            characterClass = "Knight";
+            archerBox.setSelected(false);
+            warriorBox.setSelected(false);
+        }
+    }
+
+    public void exit(Event l) {
         description.setText("e");
     }
-    
+
 }
-       
-     
-               
-        
-
-    
-
-
-
