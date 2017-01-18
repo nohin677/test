@@ -1,0 +1,8 @@
+
+#anchorPane{
+    -fx-background-color: rgb(50,70,50);
+}
+#closeButton{
+    -fx-background-color: rgb(50,50,50);
+   -fx-border-color: green;
+}

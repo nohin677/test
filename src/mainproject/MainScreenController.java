@@ -13,8 +13,10 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -28,7 +30,7 @@ import javafx.stage.Stage;
  * @author USER
  */
 public class MainScreenController implements Initializable {
-   
+
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -39,32 +41,46 @@ public class MainScreenController implements Initializable {
     private ImageView mainTitle;
     @FXML
     private MediaView mv;
+    @FXML
     private MediaPlayer mp;
     private Media me;
-    @FXML private Button closeButton;
+    @FXML
+    private Button closeButton;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-             
-              String path = new File("C:/Users/USER/Documents/NetBeansProjects/MainProject/src/media/song.mp3").getAbsolutePath();
-              me = new Media(new File(path).toURI().toString());
-              mp = new MediaPlayer(me);
-              mv.setMediaPlayer(mp);
-              mp.setAutoPlay(true); 
-    }
-public void startButton(ActionEvent event) throws Exception{
-      //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-      Stage stage = (Stage) closeButton.getScene().getWindow();
-      //Stage primaryStage = new Stage();
-      // stage.close();
-       mp.dispose();
-     
-     
-       MakingGame newGame = new MakingGame();
-       newGame.start(stage);
+
+        String path = new File("C:/Users/test/Documents/NetBeansProjects/MainProject/src/media/song.mp3").getAbsolutePath();
+        me = new Media(new File(path).toURI().toString());
+        mp = new MediaPlayer(me);
+        mv.setMediaPlayer(mp);
+        mp.setAutoPlay(true);
+       changeBackgroundColour(mainBackground);
+       changeBackgroundColour(secondImage);
     }
 
-    
+    public void startButton(ActionEvent event) throws Exception {
+        //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        //Stage primaryStage = new Stage();
+        // stage.close();
+        mp.dispose();
+
+        String FxName = "gameScreen.fxml";
+        MakingGame newGame = new MakingGame();
+        newGame.start(stage, FxName);
+    }
+
+    public void changeBackgroundColour(ImageView view) {
+        ColorAdjust blackout = new ColorAdjust();
+        blackout.setBrightness(-0.5);
+        
+        view.setEffect(blackout);
+        view.setCache(true);
+        view.setCacheHint(CacheHint.SPEED);
+    }
+
 }

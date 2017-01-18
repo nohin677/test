@@ -33,7 +33,9 @@ import javafx.util.Duration;
 import File.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -42,6 +44,8 @@ import javafx.scene.control.CheckBox;
  */
 public class GameScreenController implements Initializable {
 
+    @FXML
+    public Button doneButton;
     @FXML
     public Label characterLabel, description;
     @FXML
@@ -54,7 +58,7 @@ public class GameScreenController implements Initializable {
     private ArrayList<String> allDescriptions = new ArrayList();
     private String characterName, characterRace, characterGender, characterClass, characterBodyType;
     private MakeTextFile newFile;
-    private boolean[] conditions = {false, false, false, false};
+    private boolean[] conditions = {false, false, false, false, false};
 
     /**
      * Initializes the controller class.
@@ -77,7 +81,7 @@ public class GameScreenController implements Initializable {
                 "Human is a very basic class",
                 "Pounder is a class for angry indvials");
 
-        newFile = new MakeTextFile("C:/Users/USER/Documents/limo.txt");
+        newFile = new MakeTextFile("C:/Users/test/Documents/NetBeansProjects/MainProject/src/files/textFile.txt");
         try {
             newFile.createNewFile();
             newFile.createInputStream();
@@ -110,13 +114,22 @@ public class GameScreenController implements Initializable {
     }
 
     public void EnteredCharacterName(ActionEvent event) {
+        if (!characterNameTextField.getText().matches("[a-zA-Z]+")) {
+            characterLabel.setText("Your Character Name Can't Be Nothing,\n  contain numbers and spaces ");
+            conditions[4] = true;
 
-        if (characterNameTextField.getText() != null) {
+        } else {
+            characterName = characterNameTextField.getText();
+            characterLabel.setText("Your Character Name is: " + characterName);
+
+        }
+
+        /* if (characterNameTextField.getText().equalsIgnoreCase("")) {
             characterLabel.setText("Your Character Name Can't Be Nothing");
         } else {
             characterName = characterNameTextField.getText();
             characterLabel.setText("Your Character Name is: " + characterName);
-        }
+        } */
     }
 
     public void warriorDescription(Event eve) {
@@ -180,7 +193,7 @@ public class GameScreenController implements Initializable {
 
     public void checkEventChooseClass(Event event) {
         conditions[3] = true;
-         if (warriorBox.isSelected()) {
+        if (warriorBox.isSelected()) {
             characterClass = "Warrior";
             archerBox.setSelected(false);
             knightBox.setSelected(false);
@@ -195,8 +208,21 @@ public class GameScreenController implements Initializable {
         }
     }
 
-    public void exit(Event l) {
-        description.setText("e");
+    public void doneButton(Event event) throws Exception {
+        int adder = 0;
+        for (int i = 0; i < conditions.length; i++) {
+            if (conditions[i] == true) {
+                adder++;
+            }
+        }
+        if (adder == 4) {
+            String FxName = "mainGameScreen.fxml";
+            Stage stage = (Stage) doneButton.getScene().getWindow();
+            MakingGame newGame = new MakingGame();
+            newGame.start(stage, FxName);
+        } else{
+            description.setText("Please check all boxes and enter a name thats valid!");
+        }
     }
 
 }

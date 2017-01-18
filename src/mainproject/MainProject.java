@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -27,11 +28,15 @@ public class MainProject extends Application {
     public void start(Stage primaryStage) throws IOException {
      
         Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+      
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         primaryStage.setResizable(false);
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image("img/sword1.png"));
         primaryStage.show();
+        
     
         
         
@@ -44,6 +49,8 @@ public class MainProject extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+       
+        
     }
     
     

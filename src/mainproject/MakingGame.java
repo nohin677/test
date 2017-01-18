@@ -31,9 +31,9 @@ public class MakingGame  {
     }
 
    
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage, String fxName) throws Exception {
         
-         Parent root = FXMLLoader.load(getClass().getResource("gameScreen.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource(fxName));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
